@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import TodoItem from './components/TodoItem'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component{
+  constructor(props){
+    super(props);
+    this.TodoItems=[
+      {title:"asd",isComplete:true},
+      {title:"asdadasd"},
+      {title:"asdasdasdasd"}
+    ];
+    this.state = {date: new Date()};
+  }
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+  render(){
+    
+    return (
+      <div className="App">
+        <h1>
+        {
+        this.TodoItems.map((item,index)=>
+        <TodoItem key={index} item={item}/>)
+      }
+        </h1>
+        <h2>{this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+    
+
+
+  }
+  }
+  
 
 export default App;
